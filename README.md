@@ -47,8 +47,6 @@ gtk-single-instance = false
 This used the tab column displays capabilites of the niri window manager.
 1. You select a project from your folder.
 2. A new ghostty window is spawned in the working directory you selected and with a title `ghostty.project_name` that will be used to swtich between the windows.
-3. If the current ghostty column is not in tab mode
-    - Niri will activate tab mode in the ghostty column.
-    - The new ghostty window that has spawned will be consumed into the column.
-    - Niri will focus the new ghostty window.
-    If it is already in tab mode niri will consume the new window into the column and focus the new window.
+3. Niri will activate tab mode in the ghostty column if not already activated.
+4. The new ghostty window that has spawned will be consumed into the column.
+5. Niri will focus the new ghostty window.
