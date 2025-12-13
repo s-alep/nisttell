@@ -1,6 +1,6 @@
 # Nisttell
 
-**Ni**ni + Gho**stt**y + Fuzz**el**
+**Ni**ri + Gho**stt**y + Fuzz**el**
 
 ## Introduction
 
@@ -23,24 +23,27 @@ gtk-single-instance = false
 ```
 
 5. On your niri configurations 'config.kdl'
-    i. If you want to use fuzzel:
+   If you want to use fuzzel:
     ```kdl
         Mod+apostrophe { spawn "~/<NISTTELL_DIR>/nisttell";}
         Mod+semicolon { spawn "~/<NISTELL_DIR>/nisttell-switcher";}
     ```
-    ii. If you want to use the fzf:
-    ```kdl
+    
+   If you want to use the fzf:
+   
+   ```kdl
         Mod+apostrophe { spawn-sh "ghostty --title=session.manager -e bash -c ~/<NISTTELL_DIR>/nisttell";}
         Mod+semicolon { spawn-sh "ghostty --title=session.switcher -e bash -c ~/<NISTELL_DIR>/nisttell-switcher";}
-    ```
-        - You can also make this floating by setting a window rule for the windows that have title with "session."
+   ```
+   
+   You can also make this floating by setting a window rule for the windows that have title with "session."
 
-        ```kdl
-        window-rule {
-            match title="^session\\."
-            open-floating true
-        }
-        ```
+    ```kdl
+    window-rule {
+        match title="^session\\."
+        open-floating true
+    }
+    ```
 
 ## How this works
 
