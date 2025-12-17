@@ -14,6 +14,7 @@ Requires:
 import subprocess
 import json
 import sys
+import argparse
 
 
 def run(cmd):
@@ -39,6 +40,9 @@ def focus_window(window_id):
 def main():
     windows = get_niri_windows()
 
+    parser = argparse.ArgumentParser(description='Your script description')
+    parser.add_argument('--fzf', action='store_true', help='Use the FZF mode (uses fuzzel by default)')
+    args = parser.parse_args()
     ghosttys = []
     for w in windows:
         app_id = w.get("app_id", "")
@@ -51,31 +55,23 @@ def main():
 
     lines = "\n".join(f"{w['title']}\t{w['id']}" for w in ghosttys)
 
-    #Uncomment for fzf mode
+    command_array= ["fzf", "--with-nth=1", "--delimiter=\t"] \
+        if args.fzf else \
+        ["fuzzel", "-d"]
 
-    fzf = subprocess.run(
-        ["fzf", "--with-nth=1", "--delimiter=\t"],
+
+    picker = subprocess.run(
+        command_array,
         input=lines,
         text=True,
         capture_output=True,
     )
-    if fzf.returncode != 0 or not fzf.stdout.strip():
+
+    if picker.returncode != 0 or not picker.stdout.strip():
         print("No selection.")
         sys.exit(0)
-    selected = fzf.stdout.strip().split("\t")
 
-    # fuzzel = subprocess.run(
-    #     ["fuzzel", "-d"],
-    #     input=lines,
-    #     text=True,
-    #     capture_output=True,
-    # )
-
-    # if fuzzel.returncode != 0 or not fuzzel.stdout.strip():
-    #     print("No selection.")
-    #     sys.exit(0)
-
-    # selected = fuzzel.stdout.strip().split("\t")
+    selected = picker.stdout.strip().split("\t")
     window_id = selected[1]
 
     focus_window(window_id)

@@ -24,6 +24,7 @@ import sys
 import json
 import subprocess
 import time
+import argparse
 from pathlib import Path
 
 # Config
@@ -145,11 +146,12 @@ def spawn_ghostty(project_path: Path, class_name: str):
 
 def main():
     projects = list_project_dirs(PROJECTS_DIR)
+    parser = argparse.ArgumentParser(description='Your script description')
 
-    # CHOOOSE YOUR PICKER HERE
-    # Simply uncomment the fzf line
-    # chosen = pick_project_with_fuzzel(projects)
-    chosen = pick_project_with_fzf(projects)
+    parser.add_argument('--fzf', action='store_true', help='Use the FZF mode (uses fuzzel by default)')
+
+    args = parser.parse_args()
+    chosen = pick_project_with_fzf(projects) if args.fzf else pick_project_with_fuzzel(projects)
 
     project_name = chosen.name
     title = f"ghostty.{project_name}"
